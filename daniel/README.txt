@@ -11,3 +11,5 @@ Print 3 copies of the pawns.pdf file, double sided with back.pdf as the reverse,
 The central board is is 27 inches by 18 inches. Print 1 copy, it can be printed single sided on extra large paper.
 
 The player board are 24 inches by 12 inches. Print 5 copies single sided on extra large paper.
+
+If necessary, PNG files are provided for each board that breaks them down into 8 inch by 10.5 inch squares that can be printed on Letter sized paper.
