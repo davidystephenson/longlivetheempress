@@ -1,0 +1,15 @@
+{
+  "customRules": [
+    ".markdownlint-rules/prose-punctuation.cjs"
+  ],
+  "ignores": [
+    "node_modules",
+    "archive/bakeoffs",
+    "archive/bakeoffTasks",
+    "prompts/INBOX.md",
+    "prompts/exports",
+    "prompts/meta",
+    "prompts/reference",
+    "prompts/seeds"
+  ]
+}
