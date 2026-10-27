@@ -18,7 +18,8 @@ Bolding is reserved for meaningful inline emphasis.
 
 ## Links
 
-Local filesystem link targets must be absolute paths starting with `/home/david/`.
+Use repo-relative Markdown links for files in the same repository.
+Links to local files outside the current repository must use absolute paths starting with `/home/david/`.
 Do not use `~` in a Markdown link target because Markdown renderers treat it as a literal relative URL and do not expand it to the home directory.
 The visible label may use a short form such as `~/athena/athena` when that is easier to scan, but the link target must stay absolute.
 Example: `[Athena](/home/david/athena/athena)`.
@@ -31,7 +32,7 @@ Do not reformat inside fenced code blocks.
 
 ## Titles
 
-Do not capitalize the words of a title after the first unless it is a proper noun.
+Do not capitalize the words of a title after the first unless it is capitalized in normal prose.
 This is advisory because project names, model names, acronyms, commands, route names, and quoted/source text need judgment.
 
 ## Sections
@@ -56,7 +57,7 @@ Do not capitalize the description unless it has multiple sentences.
 Do not use extra backticks or bolding for each list item title.
 
 Most list items should not use punctuation at the end.
-Only use punctuation if the list item has multiple sentences.
+Only use punctuation if the list item has multiple sentences, or if the item is quoted/source text that itself ends with punctuation.
 If the list item has multiple sentences, begin each sentences with a capital letter, and end each sentence with a period, including the last one.
 
 Do not use nested listed lists unless there are multiple nested items.
@@ -66,6 +67,16 @@ Do not use nested listed lists unless there are multiple nested items.
 Markdown tables must be contiguous: no blank lines between header, separator, or body rows.
 CommonMark ends a table on the first blank line, so internal blanks break rendering in Glass and other parsers.
 Keep one blank line before and after the whole table block only.
+
+Use compact column style: one space around cell content, no padding to align pipes.
+Do not use space-padded aligned tables.
+Separator cells must use exactly three hyphens (`---`), with optional alignment colons (`:---`, `---:`, `:---:`).
+
+```markdown
+| Path | Purpose |
+| --- | --- |
+| `README.md` | Project purpose |
+```
 
 ## Not applicable
 

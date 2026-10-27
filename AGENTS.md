@@ -4,11 +4,32 @@ This repository holds Long Live the Empress project assets.
 
 Markdown style for repo docs: [STYLE.md](STYLE.md).
 
+## External repositories
+
+Do not install Pantheon skills, synchronize shared guidance, or make other changes in externally owned repositories as part of Pantheon-wide work.
+A Pantheon-owned client-support folder does not grant authority over its externally owned child repositories.
+
+## Project creation
+
+When creating a Pantheon-owned project, follow the [project creation checklist](/home/david/pantheon/README.md#project-creation-flow).
+Verify the effective Codex model and reasoning effort against the recorded project-family defaults before declaring setup complete.
+Create any required `.codex/config.toml` override and confirm it is active in a trusted project layer.
+Project registration alone does not configure model defaults.
+
 ## Agent workspace boundary
 
 `agent/` is exclusively for agent workspace, scratchpad, memory bank, research, reports, references, and any other agent-directory working material.
 Never discuss, cite, link, summarize, or direct David to `agent/` files.
 When information from `agent/` matters to David, distill the relevant result into chat or a user-facing root/inbox/outbox document without naming or linking the agent-directory source file.
+
+### Craft ratchet
+
+Whenever the user gives feedback, habitually consider what it teaches you about improving the current work and future work in this project.
+Apply the feedback to the current task and look for an underlying lesson, including what worked well and should be preserved.
+When the lesson is reusable, update the most relevant guidance, examples, checks, or tools in `agent/` so later work benefits without the user having to repeat the feedback.
+Keep the lesson concrete and faithful to the user's intent, distinguishing a one-time request from a lasting project preference.
+Use those lessons when doing and reviewing subsequent work, and refine them as new feedback improves your understanding.
+Keep project-specific lessons within their project and respect existing privacy boundaries when generalizing them.
 
 ## Critical: interaction protocol (state a / b / c)
 
@@ -233,3 +254,506 @@ Replace outdated lines every time you include the section, do not append stale v
 
 If the user says "replan", they want to hand off to a new agent in Plan Mode.
 Adjust the **next chat prompt** to optimize for Plan Mode (explore options, readonly checks, no implementation until the user confirms).
+
+## The Roman Sentinel (**Over**/**Out**)
+
+This protocol applies to typed text-task replies, including text produced through Voice dictation.
+It does not apply during a genuine live Voice conversation.
+When the runtime explicitly identifies itself as a live Voice conversation, speak naturally without Roman decision lists or the **Over**/**Out** sentinel.
+Do not infer live Voice merely because the user's text originated from speech.
+
+Over and Out govern final answers that yield control to the user.
+Progress commentary may report ongoing work without either ending shape when followed by continued execution.
+
+For every in-scope typed reply, run this before drafting.
+There are only two reply outcomes: **Over** and **Out**.
+
+### Plain language
+
+Use plain, recognizable language in conversation.
+Do not invent abbreviations, acronyms, compressed labels, or special terms merely to shorten replies.
+Prefer naming the actual thing or describing the action directly.
+Use established technical terms when they help, explaining unfamiliar ones on first use.
+Reuse shorthand the user introduces when its meaning is clear, but do not assume that defining your own shorthand once makes it useful or welcome.
+
+### Fast path
+
+Before every reply:
+
+1. If the next useful step belongs to the agent, do that work before replying.
+1. Once no agent-owned work remains, choose **Over** or **Out** and shape the reply accordingly:
+   - If the next useful step belongs to the user, pick **Over**
+   - If the request is resolved, nothing is open to continue, and there is nothing to spike test, pick **Out**
+1. Before sending, confirm the reply has a visible ending shape.
+   - **Over** ends with a Roman list.
+   - **Out** ends with the exact line "No questions, suggestions, concerns, or follow-up decisions. There is nothing to continue or spike test."
+     Only give the Out sentinel if it is literally true, otherwise keep working or end with **Over**.
+
+Do not omit the ending shape to shorten the reply.
+
+### Protocol intent
+
+The goal is to make every reply unambiguous: either **Over** for a specific user decision, or **Out** because nothing remains to continue and there is nothing to spike test.
+The user should never have to infer whether the agent is asking permission or closing **Out**.
+
+- **Over** means the agent needs the user's answer to safely or usefully continue something.
+- **Out** means the current task state resolves the request, no user decision or useful next action remains, and there is nothing to continue or spike test.
+
+If the user's instruction is clear enough to execute, do the work before replying, then choose **Out** only if no questions, suggestions, concerns, or follow-up decisions remain, and there is nothing to continue or spike test.
+Reviewing, advising, discussing, explaining, and editing are all real work.
+If the agent cannot responsibly choose the next action from the user's instruction and the available context, that uncertainty is open, so pick **Over**.
+
+### Decision order (every turn, before you write)
+
+1. Complete safe independent work before **Over**.
+   If some requested work is clear and does not depend on a user decision, do it before stopping on the decision that remains!
+1. Choose the reply outcome only after agent-owned work is exhausted.
+   If the next useful step belongs to the user, pick **Over**.
+   If the request is resolved, nothing is open to continue, and there is nothing to spike test, pick **Out**.
+1. Scan the reply, the user's latest reply, and any unresolved earlier **Over** items before sending.
+   Include new items raised by the user's latest reply, even when they answered the whole earlier list.
+   If any question, suggestion, concern, follow-up decision, unresolved item, continuable path, or useful spike test remains open, pick **Over**.
+   Otherwise, send **Out**.
+1. Shape the reply to match the chosen outcome, and only then send.
+   Which of **Over** or **Out** is correct is the agent's pick.
+   An internal label ("this is Out" or "Over.") does not count.
+   Only the shaped reply counts.
+   Do not skip this step because shaping feels awkward or the draft already answered the question.
+1. Before sending, verify the reply is **Over**-shaped or **Out**-shaped.
+   A reply with neither shape is invalid.
+   Do not send it.
+   Reshape as **Over** or **Out** first.
+   Check the visible ending:
+   - **Over** ends with a Roman list.
+   - **Out** ends with the exact line "No questions, suggestions, concerns, or follow-up decisions. There is nothing to continue or spike test."
+     Only give the **Out** sentinel if it is literally true, otherwise keep working or end with **Over**.
+
+### Situation → response
+
+| Situation | Response |
+| --- | --- |
+| User gave an explicit do-it instruction, but it is not clear enough to execute | **Over** |
+| The final result implies follow-up decisions, steerable findings, cleanup candidates, next passes, risks, priorities, changes the user should pick among | **Over** |
+| The next useful step belongs to the agent and is explicitly or implicitly part of the task the user already gave | Do not stop to respond yet. Do the work, then decide the sentinel after it is done. |
+| The next useful step requires a user decision or would change scope, risk, outward effect, or intent | **Over** |
+| Request is resolved, and there are no follow-up decisions, recommendations, next pass, concerns, or spike tests | **Out** |
+
+### Over
+
+Pick **Over** when the user needs to reply before the interaction can cleanly close or before you can safely continue.
+This includes real decisions, confirmations, clarifications, actionable findings, priorities, forks, and even one simple intent question.
+
+Only use **Over** when the agent cannot responsibly choose the next action from the user's instruction and the available context.
+Do not use `Over` when the next step is explicitly or implicitly part of the task the user already gave.
+
+Do not ask a circular final apply question while sibling choices are unresolved
+
+#### Roman shape
+
+When the response is **Over**:
+
+- Put one top-level Roman numeral list at the end of the message body.
+- Give each independent question, decision, or request for results its own top-level Roman item.
+  Keep the findings and procedural steps that support the same request together within that item.
+  Do not turn individual steps into separate Roman items.
+- Freeform prose and rich content may appear before the Roman numeral list.
+  All decisions stay inside the Roman numeral list.
+- Put every still-open question, concern, suggestion, or follow-up decision in the Roman list, not only in the prose above it.
+  Keep related ones inside the same Roman item.
+  Give a concern or suggestion its own top-level item only when it needs a separate reply.
+- When offering explicit reply choices, default to dotted uppercase Roman subnumerals under the item they decide, such as `II.I`, `II.II`, and `II.III` under item `II`
+- Put each Roman subnumeral choice on its own source line
+- Put each nested choice, such as `I.II.I` and `I.II.II`, on its own source line with the same trailing-backslash rule
+- Put a trailing backslash on every choice line, and on the decision question or parent line immediately above the first choice
+  A newline alone is not enough.
+  Without that preceding backslash, Markdown joins the question and `I.I` into one rendered line
+- Free-form replies are always valid.
+  Do not force choices when the user can answer more naturally in plain language
+- Use the same numbering when the user replies with item numbers, including `7.1`, `7.2`, `VII.I`, or `VII.II`
+- Keep context, snippets, links, sub-bullets, and explanation inside the relevant Roman item
+- Do not add a second decision list, recommendations list, or trailing open question outside the Roman list
+
+#### Avoid disjointed findings
+
+"Disjointed findings" is when content specific to a **Over** Roman list item in the body above the list.
+Do not put competing content in the body before the **Over** Roman list.
+Keep competing lists out of the intro.
+Fold structured content into the Roman items.
+Collect and consolidate findings, context, snippets, and choices inside the Roman item the user needs to answer.
+
+### Out
+
+Pick **Out** when the requested work is resolved, no user reply is needed, no next useful step remains for the agent, and there is nothing to continue or spike test.
+If the next useful step belongs to the agent as part of the task the user already gave, do the work before responding.
+
+**Out** prose carries NO questions, suggestions, concerns, unresolved follow-up decisions. Every one of those becomes an **Over** Roman item instead.
+If a review identifies a change the user could accept, reject, prioritize, or ask to implement, the review is **Over**, not **Out**, even if the review itself is complete.
+Any finding that implies a possible edit, cleanup, follow-up audit, prioritization, or decision is an open item.
+
+**Out** claims that no useful spike test remains, i.e., that there is nothing worth spike testing.
+If a useful spike test is already part of the granted task, run it before sending **Out**.
+Do not send **Out** while a useful spike is still unstated.
+
+- Deliver the answer or completion note.
+- Follow the Decision order before choosing **Out**.
+  If the Decision order finds unresolved work whose next useful step belongs to the agent, keep working before replying.
+- End with the exact **Out** sentinel.
+  If the Decision order finds a real user decision, pick **Over**.
+- Before sending **Out**, scan for substantive meaning.
+  If the reply would reasonably invite the user to approve, reject, prioritize, sequence, or act on anything, convert the reply to **Over**.
+
+#### Out sentinel
+
+Use this exact line: No questions, suggestions, concerns, or follow-up decisions. There is nothing to continue or spike test.
+
+#### Out sentinel rules
+
+- Verbatim: no bold, backticks, extra words, or punctuation changes.
+- Chat only - not PLAN, PROGRESS, or outbox files.
+- Before sending any Out reply, check that exactly one Out sentinel is present in the correct position.
+- It must be literally true.
+  Think carefully, then review, research, and analyze the task state.
+  Are you sure there are absolutely no more questions, suggestions, concerns, or follow-up decisions?
+  Are you sure there is absolutely nothing to continue?
+  Are you absolutely sure nothing is worth spike testing?
+- A caveat, like "you could also...", is an **Over** item, not a footnote under the sentinel.
+
+### Broken -> fixed
+
+Use these examples to catch the failure modes agents most often miss.
+
+#### Disjointed findings
+
+The agent parks an open finding in the body prose, then asks about it again in the Roman list.
+That splits one thread across intro and list.
+
+##### User prompt
+
+What cities are worth considering?
+
+##### Agent response
+
+I. Amsterdam
+II. Melbourne
+III. Vancouver
+
+##### User response
+
+I. Agentically acquire a visa.
+II. Too hard on the cat.
+III. How is the weather?
+
+##### Broken disjointed findings
+
+Nowhere is perfect.
+For some reason IND's agentic interface from the first item is failing.
+The weather in Vancouver is excellent.
+How about Montevideo?
+
+I. Apply to IND manually?\
+I.I. Apply\
+I.II. Skip
+
+II. I assume Canada has an agentic interface like any legitimate institution.
+
+Apply to IRCC agentically?\
+II.I. Apply\
+II.II. Skip
+
+III. Apply to CNM agentically?\
+III.I. Apply\
+III.II. Skip
+
+##### Fixed disjointed findings
+
+Nowhere is perfect.
+
+I. For some reason IND's agentic interface from the first item is failing.
+
+Apply to IND manually?\
+I.I. Apply\
+I.II. Skip
+
+II. The weather in Vancouver is excellent.
+I assume Canada has an agentic interface like any legitimate institution.
+
+Apply to IRCC agentically?\
+II.I. Apply\
+II.II. Skip
+
+III. How about Montevideo?
+
+Apply to CNM agentically?\
+III.I. Apply\
+III.II. Skip
+
+#### Abandoned turn
+
+The agent stops with neither **Over** nor **Out** sentinel without finishing the work.
+
+##### User prompt abandoned turn
+
+How can you get the information you need?
+
+##### Broken abandoned turn
+
+The next step belongs to me: trace the SDK's provenance and available reference material first. A support message would require your approval to send, but the local investigation does not.
+
+##### Fixed abandoned turn
+
+I confirmed that the SDK is published by the vendor and checked its README, bundled examples, and release notes.
+None documents whether expired sessions can reconnect automatically.
+The local investigation is complete, and the remaining question is whether the vendor supports automatic reconnection and, if so, which method and configuration to use.
+
+I. Do I have your approval to send a support message?\
+I.I. Yes\
+I.II. No
+
+#### Camouflaged **Over**
+
+Decisions are left open despite an **Out** sentinel.
+
+##### Broken Camouflaged **Over**
+
+The offer section is making the user wait too long before it says what is actually available.
+If you care about heat, replace:
+
+```text
+We can talk through a few possible next steps whenever you are ready.
+```
+
+with:
+
+```text
+Book the launch review and leave with the next three moves.
+```
+
+No questions, suggestions, concerns, or follow-up decisions. There is nothing to continue or spike test.
+
+##### Fixed Camouflaged **Over**
+
+I. The offer section is making the user wait too long before it says what is actually available.
+If you care about heat, replace:
+
+```text
+We can talk through a few possible next steps whenever you are ready.
+```
+
+with:
+
+```text
+Book the launch review and leave with the next three moves.
+```
+
+Use the shorter offer?\
+I.I. Apply\
+I.II. Explain why this is a problem\
+I.III. Explain why this phrasing\
+I.IV. Provide a few alternative phrasings\
+I.V. Skip
+
+#### Lazy **Over**
+
+Roman items do not ask for a decision.
+
+##### Broken Lazy **Over**
+
+I. The UI structure is sound, but the design is incomplete.
+
+II. There is no accent color yet and I do not know your favorite color.
+
+##### Fixed Lazy **Over**
+
+The UI structure is sound, but the design is incomplete.
+
+I. There is no accent color yet. What is your favorite color?
+
+#### Packed Roman subchoices
+
+The agent puts reply choices on one line, which is hard to scan and easy to mis-reply.
+
+##### Broken packed Roman subchoices
+
+I. What do you want for HID inserts? I.I. Skip Super-block I.II. Pass through keys I.III. Leave as-is
+
+##### Fixed packed Roman subchoices
+
+I. What do you want for HID inserts?\
+I.I. Skip Super-block in HID mode (keep it for fast/cli)\
+I.II. Pass through non-Super keys\
+I.III. Leave as-is
+
+#### Reply slot collision
+
+The agent puts a list in the body before the Over Roman list.
+If the user replies `3 give me an example of something that already uses that color`, it is unclear whether `3` means Red or **Over** item III.
+Keep competing lists out of the intro, and put every decision in one Over Roman list.
+
+##### Broken reply slot collision
+
+The primary colors are:
+
+1. Blue
+1. Yellow
+1. Red
+
+I. Change the header to red?\
+I.I. Apply\
+I.II. Skip
+
+II. Expand beyond primary colors?\
+II.I. Apply\
+II.II. Skip
+
+III. Change the footer to yellow?\
+III.I. Apply\
+III.II. Skip
+
+IV. Send an email to the designer asking for input?\
+IV.I. Apply\
+IV.II. Skip
+
+##### Fixed reply slot collision
+
+The primary colors are blue, yellow, and red.
+
+I. Change the header to red?\
+I.I. Apply\
+I.II. Skip
+
+II. Expand beyond primary colors?\
+II.I. Apply\
+II.II. Skip
+
+III. Change the footer to yellow?\
+III.I. Apply\
+III.II. Skip
+
+IV. Send an email to the designer asking for input?\
+IV.I. Apply\
+IV.II. Skip
+
+#### Circular apply item
+
+The final item asks whether to apply choices that should already be decided inside each sibling item.
+
+##### Broken circular apply item
+
+I. The designer asked to see the plan during execution, but it's not on GitHub yet.
+
+Publish externally?\
+I.I. Yes\
+I.II. No
+
+II. Add an onboarding paragraph at the very start?
+
+```txt
+This project is all about rejecting conformity. Often the best way to do that is to make a clear offer and invite desire.
+```
+
+II.I. Apply\
+II.II. Discuss exact wording first\
+II.III. Skip
+
+III. Apply these choices now?\
+III.I. Apply\
+III.II. Discuss exact wording first\
+III.III. Skip
+
+##### Fixed circular apply item
+
+I. The designer asked to see the plan during execution, but it's not on GitHub yet.
+
+Publish externally?\
+I.I. Yes\
+I.II. No
+
+II. Add an onboarding paragraph at the very start?
+
+```txt
+This project is all about rejecting conformity. Often the best way to do that is to make a clear offer and invite desire.
+```
+
+II.I. Apply\
+II.II. Discuss exact wording first\
+II.III. Skip
+
+#### Lazy **Out**
+
+The agent sends Out while leaving granted, executable work undone.
+
+##### Broken Lazy **Out**
+
+Updated `PLAN.md`, it is ready for your review.
+I know you gave permission to update `BUDGET.md` and I have all the information I need.
+I could update it now.
+
+No questions, suggestions, concerns, or follow-up decisions. There is nothing to continue or spike test.
+
+##### Fixed Lazy **Out**
+
+I updated `PLAN.md` and `BUDGET.md` as requested, both are ready for your review.
+
+No questions, suggestions, concerns, or follow-up decisions. There is nothing to continue or spike test.
+
+#### Micro-traces
+
+##### User micro-trace 1
+
+`getCwd` to `getCurrentWorkingDirectory`
+
+##### Agent micro-trace 1
+
+Renamed it.
+The symbol search now shows only `getCurrentWorkingDirectory`.
+
+No questions, suggestions, concerns, or follow-up decisions. There is nothing to continue or spike test.
+
+##### User micro-trace 2
+
+Review this launch plan
+
+##### Agent micro-trace 2
+
+I found two steerable changes.
+I think we are about 50% ready to launch, there are some big issues.
+
+I. The decision point is not clear.
+The phrase "reasonable" is not meaningful.
+This is critical because rollback contains sensitive data.
+
+| Extra phrase | Impact |
+| --- | --- |
+| reasonable | less clarity |
+
+Clarify rollback ownership by removing "reasonable"?\
+I.I. Apply\
+I.II. Discuss exact replacement:\
+I.II.I "most cost-efficient"\
+I.II.II "least expensive"\
+I.II.III "least disruptive"\
+I.III. Skip
+
+II. The current CTA asks for permission when the surrounding copy is already making a clear offer:
+
+```txt
+The theater is your own private space to relax and enjoy, are you comfortable with hearing more about that?
+```
+
+Make the CTA more direct and less compliant?\
+II.I. Apply\
+II.II. Discuss the exact change first:\
+II.II.I `Enjoy a theater equipped with bed and a private bathtub`.\
+II.II.II `Enjoy your private bathtub and bed experience now`.\
+II.II.III `Enjoy a theater with a private bathtub and bed`.\
+II.III. Skip
+
+##### User micro-trace 3
+
+I.I, II.III
+
+##### Agent micro-trace 3
+
+Applied item I and skipped item II.
+
+No questions, suggestions, concerns, or follow-up decisions. There is nothing to continue or spike test.

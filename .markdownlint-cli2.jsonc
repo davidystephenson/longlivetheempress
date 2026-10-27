@@ -1,15 +1,7 @@
 {
   "customRules": [
-    ".markdownlint-rules/prose-punctuation.cjs"
+    ".markdownlint-rules/prose-punctuation.cjs",
+    ".markdownlint-rules/table-separator-dashes.cjs"
   ],
-  "ignores": [
-    "node_modules",
-    "archive/bakeoffs",
-    "archive/bakeoffTasks",
-    "prompts/INBOX.md",
-    "prompts/exports",
-    "prompts/meta",
-    "prompts/reference",
-    "prompts/seeds"
-  ]
+  "ignores": ["node_modules", "PLAYGROUND.md"]
 }
